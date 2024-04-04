@@ -28,6 +28,7 @@ const LoginScreen = () => {
        const user = userCredential.user;
        console.log("User Signed In:", user.email);
        // Navigate to the next screen or perform other actions
+       navigation.navigate("HomePageScreen");
     } catch (error) {
        console.error("Error creating user:", error.message);
        alert(error.message);

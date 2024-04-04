@@ -5,6 +5,7 @@ import SplashScreen from "../screens/SplashScreen";
 import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
+import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
 
 import { COLORS } from "../constants/theme";
 
@@ -42,6 +43,15 @@ const StackNavigator = ({ }) => {
         <Stack.Screen
           name="RegisterScreen"
           component={RegisterScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShadowVisible: false,
+            headerTitle: '',
+          }}
+        />
+        <Stack.Screen
+          name="HomePageScreen"
+          component={HomePageScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShadowVisible: false,

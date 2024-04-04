@@ -20,7 +20,6 @@ import { COLORS, FONT, SIZES } from "../../constants/theme";
 
 const HomePageScreen = () => {
   const route = useRoute();
-  const { userId } = route.params;
   const navigation = useNavigation();
   const [showMenu, setShowMenu] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -51,7 +50,6 @@ const HomePageScreen = () => {
             <View style={styles.modalContent}>
               <TouchableOpacity
                 style={styles.option}
-                onPress={handleProfileNavigation}
               >
                 <Text style={styles.optionText}>Profile</Text>
               </TouchableOpacity>
@@ -68,15 +66,8 @@ const HomePageScreen = () => {
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.cardContent}>
-              <Text style={styles.expenseText}>Your Total Expense</Text>
-              <View style={styles.row}>
-                <Text style={styles.expenseAmount}> Rp 000</Text>
-                <Pressable
-                  style={styles.btn}
-                >
-                  <Text style={styles.BtnText}>View More</Text>
-                </Pressable>
-              </View>
+              <Text style={styles.expenseText}>Text Placeholder</Text>
+
             </View>
           </View>
           <View style={styles.row2}>
@@ -125,10 +116,6 @@ const HomePageScreen = () => {
                 </Text>
               </View>
             </View>
-          </Pressable>
-          <Text style={styles.contentTitle3}>Stock Recomendation</Text>
-          <Pressable
-          >
         <View style={styles.stockImageContainer}>
 
        </View>
