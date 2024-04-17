@@ -6,6 +6,7 @@ import SignUpScreen from "../screens/SignUpScreen/SignUpScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
+import ActivityLogScreen from "../screens/ActivityLogScreen/ActivityLogScreen";
 
 import { COLORS } from "../constants/theme";
 
@@ -58,6 +59,16 @@ const StackNavigator = ({ }) => {
             headerTitle: '',
           }}
         />
+        <Stack.Screen
+          name="ActivityLogScreen"
+          component={ActivityLogScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShadowVisible: false,
+            headerTitle: '',
+          }}
+        />
+
         
       </Stack.Navigator>
     </NavigationContainer>
