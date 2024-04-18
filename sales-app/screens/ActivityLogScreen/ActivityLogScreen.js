@@ -14,6 +14,8 @@ import { COLORS, SIZES } from "../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./ActivityLogScreen.style"
+import {collectionRef, firestore_db} from "../../firebase"
+import { addDoc, collection, doc } from "firebase/firestore";
 
 const ActivityLogScreen = () => {
   const navigation = useNavigation();
@@ -32,15 +34,23 @@ const ActivityLogScreen = () => {
       setIsInputsFilled(false);
     }
   }, [clientName, address, detail]);
-  const handleNextPress = () => {
-    if (isInputsFilled) {
-      navigation.navigate("HomePageScreen", {
-        clientName,
-        address,
-        detail,
-      });
-    } 
-  };
+
+  const handleNextPress = async () => {
+    try {
+       const docRef = await addDoc(collectionRef, {
+         clientname: clientName,
+         address: address,
+         detail: detail,
+       });
+       console.log("Document written with ID: ", docRef.id);
+       setAddress('');
+       setClientName('');
+       setDetail('');
+       navigation.navigate('HomePageScreen');
+    } catch (e) {
+       console.error("Error adding document: ", e);
+    }
+   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -69,12 +79,11 @@ const ActivityLogScreen = () => {
               placeholder="Enter Activity Detail"
               value={detail}
               onChangeText={(text) => setDetail(text)}
-              keyboardType="numeric"
             />
-            <Text style={[styles.ask, {marginTop: 10}]}>Nominal</Text>
+            <Text style={[styles.ask, {marginTop: 10}]}>Lorem Ipsum</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter How Much You Will Invest"
+              placeholder="Lorem ipsum"
               value={investmentNominal}
               onChangeText={(text) => setInvestmentNominal(text)}
               keyboardType="numeric"
