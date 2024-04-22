@@ -16,6 +16,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./ActivityLogScreen.style"
 import {collectionRef, firestore_db} from "../../firebase"
 import { addDoc, collection, doc } from "firebase/firestore";
+import * as Location from "expo-location"
 
 const ActivityLogScreen = () => {
   const navigation = useNavigation();
@@ -23,8 +24,28 @@ const ActivityLogScreen = () => {
   const [clientName, setClientName] = useState("");
   const [address, setAddress] = useState("");
   const [detail, setDetail] = useState("");
-  const [investmentNominal, setInvestmentNominal] = useState("");
+  const [location, setLocation] = useState("");
   const [isInputsFilled, setIsInputsFilled] = useState(false);
+
+  useEffect(() => {
+    const getPermission = async ()=> {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+      let currentlocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentlocation);
+      console.log(currentlocation);
+    };
+    getPermission();
+  }, [])
+
+  useEffect(() => {
+    if (location && location.coords) {
+       reverseGeocode();
+    }
+   }, [location]);
 
   useEffect(() => {
 
@@ -34,6 +55,15 @@ const ActivityLogScreen = () => {
       setIsInputsFilled(false);
     }
   }, [clientName, address, detail]);
+
+  const reverseGeocode = async () => {
+    const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
+       longitude: location.coords.longitude,
+       latitude: location.coords.latitude
+    });
+   
+    console.log(reverseGeocodeAddress);
+   };
 
   const handleNextPress = async () => {
     try {
@@ -81,13 +111,7 @@ const ActivityLogScreen = () => {
               onChangeText={(text) => setDetail(text)}
             />
             <Text style={[styles.ask, {marginTop: 10}]}>Lorem Ipsum</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Lorem ipsum"
-              value={investmentNominal}
-              onChangeText={(text) => setInvestmentNominal(text)}
-              keyboardType="numeric"
-            />
+            
           </View>
         </View>
         <View style={styles.btnContainer}>
