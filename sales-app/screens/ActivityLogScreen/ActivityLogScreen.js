@@ -25,6 +25,7 @@ const ActivityLogScreen = () => {
   const [address, setAddress] = useState("");
   const [detail, setDetail] = useState("");
   const [location, setLocation] = useState("");
+  const [geolocation, setGeoLocation] = useState("");
   const [isInputsFilled, setIsInputsFilled] = useState(false);
 
   useEffect(() => {
@@ -63,6 +64,9 @@ const ActivityLogScreen = () => {
     });
    
     console.log(reverseGeocodeAddress);
+    const formattedAddress = reverseGeocodeAddress[0].formattedAddress;
+    // Set geolocation state with the formattedAddress
+    setGeoLocation(formattedAddress);
    };
 
   const handleNextPress = async () => {
@@ -71,6 +75,7 @@ const ActivityLogScreen = () => {
          clientname: clientName,
          address: address,
          detail: detail,
+         geocodeAddress: geolocation,
        });
        console.log("Document written with ID: ", docRef.id);
        setAddress('');
