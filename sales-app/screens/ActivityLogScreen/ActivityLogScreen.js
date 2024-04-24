@@ -37,7 +37,6 @@ const ActivityLogScreen = () => {
       }
       let currentlocation = await Location.getCurrentPositionAsync({});
       setLocation(currentlocation);
-      console.log(currentlocation);
     };
     getPermission();
   }, [])
@@ -62,8 +61,6 @@ const ActivityLogScreen = () => {
        longitude: location.coords.longitude,
        latitude: location.coords.latitude
     });
-   
-    console.log(reverseGeocodeAddress);
     const formattedAddress = reverseGeocodeAddress[0].formattedAddress;
     // Set geolocation state with the formattedAddress
     setGeoLocation(formattedAddress);
