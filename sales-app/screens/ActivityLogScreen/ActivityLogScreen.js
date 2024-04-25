@@ -14,9 +14,11 @@ import { COLORS, SIZES } from "../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./ActivityLogScreen.style"
-import {collectionRef, firestore_db} from "../../firebase"
+import {collectionRef, firebase_storage, firestore_db, uploadToFirebase} from "../../firebase"
 import { addDoc, collection, doc } from "firebase/firestore";
 import * as Location from "expo-location"
+import * as ImagePicker from 'expo-image-picker';
+import { Alert } from "react-native";
 
 const ActivityLogScreen = () => {
   const navigation = useNavigation();
@@ -27,6 +29,7 @@ const ActivityLogScreen = () => {
   const [location, setLocation] = useState("");
   const [geolocation, setGeoLocation] = useState("");
   const [isInputsFilled, setIsInputsFilled] = useState(false);
+  const [permission, requestPermission] = ImagePicker.useCameraPermissions();
 
   useEffect(() => {
     const getPermission = async ()=> {
@@ -84,6 +87,36 @@ const ActivityLogScreen = () => {
     }
    };
 
+   const takePhoto = async ()=> {
+    try {
+      const cameraResp = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        quality: 1,
+      });
+
+      if (!cameraResp.canceled) {
+        const { uri } = cameraResp.assets[0];
+        const fileName = uri.split("/").pop();
+        const uploadResp = await uploadToFirebase(uri, fileName, (v) =>
+          console.log(v)
+        );
+        console.log(uploadResp);
+
+        listFiles().then((listResp) => {
+          const files = listResp.map((value) => {
+            return { name: value.fullPath };
+          });
+
+          setFiles(files);
+        });
+      }
+      
+    } catch (e) {
+      Alert.alert("Error Uploading Image " + e.message);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
 
@@ -112,9 +145,17 @@ const ActivityLogScreen = () => {
               value={detail}
               onChangeText={(text) => setDetail(text)}
             />
-            <Text style={[styles.ask, {marginTop: 10}]}>Lorem Ipsum</Text>
+            <Text style={[styles.ask, {marginTop: 10}]}>Take photo</Text>
             
           </View>
+
+          <Pressable
+            style={[styles.Btn, { marginLeft: 5 }]}
+            onPress={takePhoto}
+          >
+            <Text style={styles.BtnText}>Takephoto</Text>
+          </Pressable>
+
         </View>
         <View style={styles.btnContainer}>
           <Pressable
