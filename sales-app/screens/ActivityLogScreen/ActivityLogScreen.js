@@ -78,6 +78,8 @@ const ActivityLogScreen = () => {
 
   const handleNextPress = async () => {
     try {
+      
+
        const docRef = await addDoc(collectionRef, {
          clientname: clientName,
          address: address,
@@ -115,8 +117,8 @@ const ActivityLogScreen = () => {
         console.log(uploadResp);
         setPhotoName(uploadResp.photoname);
         setPhotoUrl(uploadResp.downloadUrl);
+        setPhoto(uri);
       }
-      
     } catch (e) {
       Alert.alert("Error Uploading Image " + e.message);
     }
@@ -124,7 +126,6 @@ const ActivityLogScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-
       <KeyboardAvoidingView style={{ alignItems: "center", flex: 1 }}>
         <Text style={styles.title}>Log your activity</Text>
         <View style={styles.cardContainer}>
@@ -151,15 +152,17 @@ const ActivityLogScreen = () => {
               onChangeText={(text) => setDetail(text)}
             />
             <Text style={[styles.ask, {marginTop: 10}]}>Take photo</Text>
-            
           </View>
 
-          <Pressable
-            style={[styles.Btn, { marginLeft: 5 }]}
-            onPress={takePhoto}
-          >
-            <Text style={styles.BtnText}>Takephoto</Text>
-          </Pressable>
+          {photo ? (
+            <Image source={{ uri: photo }} style={{ width: 100, height: 100 }} />
+          ) : (
+            <Pressable
+              style={[styles.Btn, { marginLeft: 5 }]}
+              onPress={takePhoto}>
+              <Text style={styles.BtnText}>Take Photo</Text>
+            </Pressable>
+          )}
 
         </View>
         <View style={styles.btnContainer}>
@@ -167,22 +170,19 @@ const ActivityLogScreen = () => {
             style={[styles.Btn, styles.CancelBtn]}
             onPress={() => {
               navigation.navigate("HomePageScreen");
-            }}
-          >
+            }}>
             <Text style={[styles.BtnText, styles.CancelText]}>Cancel</Text>
           </Pressable>
           <Pressable
             style={[styles.Btn, { marginLeft: 5, opacity: isInputsFilled ? 1 : 0.5 }]}
             disabled={!isInputsFilled}
-            onPress={handleNextPress}
-          >
+            onPress={handleNextPress}>
             <Text style={styles.BtnText}>Next</Text>
           </Pressable>
         </View>
-        
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
+
   export default ActivityLogScreen;
-  
