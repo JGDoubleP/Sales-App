@@ -29,6 +29,9 @@ const ActivityLogScreen = () => {
   const [location, setLocation] = useState("");
   const [geolocation, setGeoLocation] = useState("");
   const [isInputsFilled, setIsInputsFilled] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [photoName, setPhotoName] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
   const [permission, requestPermission] = ImagePicker.useCameraPermissions();
 
   useEffect(() => {
@@ -59,6 +62,10 @@ const ActivityLogScreen = () => {
     }
   }, [clientName, address, detail]);
 
+  useEffect(() => {
+    console.log("photoName in useEffect: ", photoName);
+  }, [photoName]);
+
   const reverseGeocode = async () => {
     const reverseGeocodeAddress = await Location.reverseGeocodeAsync({
        longitude: location.coords.longitude,
@@ -76,11 +83,15 @@ const ActivityLogScreen = () => {
          address: address,
          detail: detail,
          geocodeAddress: geolocation,
+         photoName: photoName,
+         url: photoUrl,
        });
        console.log("Document written with ID: ", docRef.id);
        setAddress('');
        setClientName('');
        setDetail('');
+       setPhotoName('');
+       setPhotoUrl('');
        navigation.navigate('HomePageScreen');
     } catch (e) {
        console.error("Error adding document: ", e);
@@ -102,14 +113,8 @@ const ActivityLogScreen = () => {
           console.log(v)
         );
         console.log(uploadResp);
-
-        listFiles().then((listResp) => {
-          const files = listResp.map((value) => {
-            return { name: value.fullPath };
-          });
-
-          setFiles(files);
-        });
+        setPhotoName(uploadResp.photoname);
+        setPhotoUrl(uploadResp.downloadUrl);
       }
       
     } catch (e) {

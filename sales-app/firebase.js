@@ -59,6 +59,7 @@ export const uploadToFirebase = async (uri, name, onProgress) => {
         resolve({
           downloadUrl,
           metadata: uploadTask.snapshot.metadata,
+          photoname: uploadTask.snapshot.metadata.name,
         });
       }
     );
