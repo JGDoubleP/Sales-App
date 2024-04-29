@@ -92,8 +92,6 @@ const ActivityLogScreen = () => {
        setAddress('');
        setClientName('');
        setDetail('');
-       setPhotoName('');
-       setPhotoUrl('');
        navigation.navigate('HomePageScreen');
     } catch (e) {
        console.error("Error adding document: ", e);

@@ -7,8 +7,7 @@ import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
 import ActivityLogScreen from "../screens/ActivityLogScreen/ActivityLogScreen";
-
-import { COLORS } from "../constants/theme";
+import LogViewScreen from "../screens/LogViewScreen/LogViewScreen";
 
 const StackNavigator = ({ }) => {
   const Stack = createNativeStackNavigator();
@@ -69,7 +68,15 @@ const StackNavigator = ({ }) => {
           }}
         />
 
-        
+        <Stack.Screen
+          name="LogViewScreen"
+          component={LogViewScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShadowVisible: false,
+            headerTitle: '',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

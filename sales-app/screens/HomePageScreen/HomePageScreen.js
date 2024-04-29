@@ -74,8 +74,15 @@ const HomePageScreen = () => {
           </View>
           
           <Text style={styles.contentTitle3}>Log your activity</Text>
+
+
+
           <Pressable onPress={() => navigation.navigate("ActivityLogScreen")} style={styles.Btn}>
             <Text style={styles.BtnText}>Start Activity Log</Text>
+          </Pressable>
+
+          <Pressable onPress={() => navigation.navigate("LogViewScreen")} style={styles.Btn}>
+            <Text style={styles.BtnText}>View Log</Text>
           </Pressable>
 
         </View>
