@@ -8,7 +8,8 @@ import {
   Image,
   Modal,
   Pressable,
-  Button
+  Button,
+  FlatList
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -18,7 +19,8 @@ import {
 } from "@react-navigation/native";
 import styles from "./HomePageScreen.style";
 import { AntDesign } from "@expo/vector-icons";
-import { COLORS, FONT, SIZES } from "../../constants/theme";
+import { doc, onSnapshot, query, } from "firebase/firestore";
+import { collectionRef } from "../../firebase";
 
 const HomePageScreen = () => {
   const route = useRoute();
@@ -26,10 +28,33 @@ const HomePageScreen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [fullName, setFullName] = useState("");
   const [totalExpenses, setTotalExpenses] = useState(0);
+  const [activities, setActivities] = useState('')
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    const q = query(collectionRef);
+    // Assuming setActivities is a state setter function
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const activities = [];
+      querySnapshot.forEach((doc) => {
+        activities.push({
+          id: doc.id,
+          clientname: doc.data().clientname,
+        });
+      });
+      setActivities(activities);
+    });
+      return ()=> unsubscribe();
+      }, []);
+
+      const renderItem = ({ item }) => (
+        <View style={styles.historyItem}>
+          <Text>{item.clientname}</Text>
+        </View>
+      );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -65,6 +90,7 @@ const HomePageScreen = () => {
           </View>
         </Modal>
         <Text style={styles.title}>Welcome User</Text>
+        
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.cardContent}>
@@ -75,8 +101,6 @@ const HomePageScreen = () => {
           
           <Text style={styles.contentTitle3}>Log your activity</Text>
 
-
-
           <Pressable onPress={() => navigation.navigate("ActivityLogScreen")} style={styles.Btn}>
             <Text style={styles.BtnText}>Start Activity Log</Text>
           </Pressable>
@@ -86,7 +110,15 @@ const HomePageScreen = () => {
           </Pressable>
 
         </View>
+
       </ScrollView>
+
+      <FlatList
+          data={activities}
+          renderItem={renderItem}
+          keyExtractor={(item => item.id)}
+        />
+
     </SafeAreaView>
   );
 };

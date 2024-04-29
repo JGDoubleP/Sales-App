@@ -178,6 +178,44 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 10, // Adjust margin as per your UI requirement
   },
+
+  History: {
+    width: 350,
+    marginTop: 20,
+
+  },
+
+  HistoryText: {
+    fontSize: SIZES.xLarge,
+    fontWeight: "bold",
+    marginBottom: 15
+  },
+
+  historyItem: {
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    width: 350,
+    borderBottomColor: "gray",
+  },
+
+  historyMoney: {
+    fontSize: SIZES.medium,
+    fontWeight: "bold",
+    marginBottom: 5
+  },
+
+  historyInfo: {
+    fontSize: SIZES.medium,
+    opacity: 0.5,
+    marginBottom: 5
+  },
+
+  historyDate: {
+    fontSize: SIZES.medium,
+    opacity: 0.5,
+    marginBottom: 5,
+    textAlign: 'right',
+  },
 });
 
 export default styles;
