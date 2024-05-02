@@ -114,36 +114,15 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.small,
     height: 35,
     width: 120,
-    marginLeft: 30,
     justifyContent: "center",
-    paddingHorizontal: 15,
-  },
-  BtnText: {
     textAlign: 'center',
     color: 'white',
     alignItems: 'center',
-    padding: 15
   },
   BtnText2: {
     color: COLORS.Saving_Red,
     textAlign: "center",
     padding: 10,
-  },
-  investButton: {
-    flex: 1,
-    marginTop: 20,
-    width: 340,
-    height: 70,
-    borderRadius: 10,
-    opacity:0.7,
-    margin: 10,
-    backgroundColor: "#DEF4DE",
-  },
-  investButtonContent: {
-    padding: 10,
-    textAlign: "flex-start",
-    alignItems: "flex-start",
-    paddingHorizontal: 20,
   },
   modalContainer: {
     flex: 1,
@@ -168,7 +147,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   closeButton: {
-    marginTop: 15,
     fontSize: 16,
     color: "blue",
     textAlign: "center",
@@ -182,20 +160,21 @@ const styles = StyleSheet.create({
   History: {
     width: 350,
     marginTop: 20,
-
   },
 
   HistoryText: {
-    fontSize: SIZES.xLarge,
+    fontSize: SIZES.medium,
     fontWeight: "bold",
-    marginBottom: 15
   },
 
   historyItem: {
     backgroundColor: "white",
-    borderBottomWidth: 1,
+    borderWidth: 1,
     width: 350,
-    borderBottomColor: "gray",
+    borderColor: "gray",
+    borderRadius: SIZES.small,
+    height: 40,
+    justifyContent: "center"
   },
 
   historyMoney: {

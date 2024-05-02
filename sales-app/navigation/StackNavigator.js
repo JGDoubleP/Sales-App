@@ -8,6 +8,7 @@ import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
 import ActivityLogScreen from "../screens/ActivityLogScreen/ActivityLogScreen";
 import LogViewScreen from "../screens/LogViewScreen/LogViewScreen";
+import LogListScreen from "../screens/LogListScreen/LogListScreen";
 
 const StackNavigator = ({ }) => {
   const Stack = createNativeStackNavigator();
@@ -71,6 +72,16 @@ const StackNavigator = ({ }) => {
         <Stack.Screen
           name="LogViewScreen"
           component={LogViewScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShadowVisible: false,
+            headerTitle: '',
+          }}
+        />
+
+        <Stack.Screen
+          name="LogListScreen"
+          component={LogListScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShadowVisible: false,

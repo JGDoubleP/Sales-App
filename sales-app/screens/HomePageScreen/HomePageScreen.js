@@ -28,7 +28,7 @@ const HomePageScreen = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [fullName, setFullName] = useState("");
   const [totalExpenses, setTotalExpenses] = useState(0);
-  const [activities, setActivities] = useState('')
+  const [activities, setActivities] = useState('');
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -36,7 +36,6 @@ const HomePageScreen = () => {
 
   useEffect(() => {
     const q = query(collectionRef);
-    // Assuming setActivities is a state setter function
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const activities = [];
       querySnapshot.forEach((doc) => {
@@ -47,19 +46,21 @@ const HomePageScreen = () => {
       });
       setActivities(activities);
     });
-      return ()=> unsubscribe();
-      }, []);
+    return () => unsubscribe();
+  }, []);
 
-      const renderItem = ({ item }) => (
-        <View style={styles.historyItem}>
-          <Text>{item.clientname}</Text>
-        </View>
-      );
+  const renderItem = ({ item }) => (
+    <View style={styles.History}>
+      <View style={styles.historyItem}>
+        <Text style= {styles.HistoryText}>{item.clientname}</Text>
+      </View>
+    </View>
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ margin: 20 }}>
+      
+        <View>
           <TouchableOpacity onPress={toggleMenu}>
             <AntDesign name="bars" size={24} color="black" />
           </TouchableOpacity>
@@ -105,23 +106,23 @@ const HomePageScreen = () => {
             <Text style={styles.BtnText}>Start Activity Log</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate("LogViewScreen")} style={styles.Btn}>
+          <Pressable onPress={() => navigation.navigate("LogListScreen")} style={styles.Btn}>
             <Text style={styles.BtnText}>View Log</Text>
           </Pressable>
 
         </View>
 
-      </ScrollView>
+      <Text style={styles.contentTitle3}>Recent Logs</Text> 
 
-      <FlatList
-          data={activities}
+      <View style={styles.container}>
+        <FlatList
+          data={activities.slice(0, 5)}
           renderItem={renderItem}
-          keyExtractor={(item => item.id)}
+          keyExtractor={(item) => item.id}
         />
-
+      </View>
     </SafeAreaView>
   );
 };
-
 
 export default HomePageScreen;
