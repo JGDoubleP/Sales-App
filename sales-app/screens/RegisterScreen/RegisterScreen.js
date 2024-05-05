@@ -14,30 +14,33 @@ import styles from "./RegisterScreen.style";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { firebase_auth, db } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
   const [fullName, setFullName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // const phoneRegex = /^\d{10}$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
   const [errorAlert, setErrorAlert] = useState(null);
   const auth = firebase_auth;
+
+  
 
   const handleRegister = async () => {
     try {
        const userCredential = await createUserWithEmailAndPassword(auth, emailAddress, password);
        const user = userCredential.user;
-       console.log("User created successfully:", user.email);
-       // Navigate to the next screen or perform other actions
+      await updateProfile(user, {
+        displayName: fullName
+      });
+
+      navigation.navigate("LoginScreen");
     } catch (error) {
        console.error("Error creating user:", error.message);
        alert(error.message);
+       deleteUser(user);
     }
    };
 
@@ -80,12 +83,12 @@ const RegisterScreen = () => {
 
           <View style={{ marginTop: 50 }}>
             <View style={styles.ViewInput}>
-              {/* <TextInput
+              <TextInput
                 style={styles.TextInput}
                 placeholder="Full name"
                 onChangeText={setFullName}
                 value={fullName}
-              /> */}
+              />
 
               <TextInput
                 style={styles.TextInput}

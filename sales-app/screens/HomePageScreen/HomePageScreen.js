@@ -21,6 +21,7 @@ import styles from "./HomePageScreen.style";
 import { AntDesign } from "@expo/vector-icons";
 import { doc, onSnapshot, query, } from "firebase/firestore";
 import { collectionRef } from "../../firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const HomePageScreen = () => {
   const route = useRoute();
@@ -29,10 +30,18 @@ const HomePageScreen = () => {
   const [fullName, setFullName] = useState("");
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [activities, setActivities] = useState('');
+  const auth = getAuth();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setFullName(user.displayName);
+    });
+  }, [])
+
 
   useEffect(() => {
     const q = query(collectionRef);
@@ -90,7 +99,7 @@ const HomePageScreen = () => {
             </View>
           </View>
         </Modal>
-        <Text style={styles.title}>Welcome User</Text>
+        <Text style={styles.title}>Welcome {fullName}</Text>
         
         <View style={styles.container}>
           <View style={styles.cardContainer}>

@@ -78,8 +78,6 @@ const ActivityLogScreen = () => {
 
   const handleNextPress = async () => {
     try {
-      
-
        const docRef = await addDoc(collectionRef, {
          clientname: clientName,
          address: address,
