@@ -19,6 +19,7 @@ import { addDoc, collection, doc } from "firebase/firestore";
 import * as Location from "expo-location"
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from "react-native";
+import { getAuth } from "firebase/auth";
 
 const ActivityLogScreen = () => {
   const navigation = useNavigation();
@@ -33,6 +34,8 @@ const ActivityLogScreen = () => {
   const [photoName, setPhotoName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [permission, requestPermission] = ImagePicker.useCameraPermissions();
+  
+  const auth = getAuth();
 
   useEffect(() => {
     const getPermission = async ()=> {
@@ -46,7 +49,7 @@ const ActivityLogScreen = () => {
     };
     getPermission();
   }, [])
-
+  
   useEffect(() => {
     if (location && location.coords) {
        reverseGeocode();
@@ -85,6 +88,8 @@ const ActivityLogScreen = () => {
          geocodeAddress: geolocation,
          photoName: photoName,
          url: photoUrl,
+         uid: auth.currentUser.uid,
+         salesname: auth.currentUser.displayName,
        });
        console.log("Document written with ID: ", docRef.id);
        setAddress('');

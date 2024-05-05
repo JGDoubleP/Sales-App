@@ -21,7 +21,7 @@ import styles from "./HomePageScreen.style";
 import { AntDesign } from "@expo/vector-icons";
 import { doc, onSnapshot, query, } from "firebase/firestore";
 import { collectionRef } from "../../firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const HomePageScreen = () => {
   const route = useRoute();
@@ -85,12 +85,19 @@ const HomePageScreen = () => {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.option}
               >
                 <Text style={styles.optionText}>Profile</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.option} >
+              </TouchableOpacity> */}
+              <TouchableOpacity onPress={() => {
+                signOut(auth).then(() => {
+                  // Sign-out successful.
+                }).catch((error) => {
+                  console.log(error)
+                });
+                }}
+                style={styles.option} >
                 <Text style={styles.optionText}>Logout</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleMenu}>
@@ -99,7 +106,11 @@ const HomePageScreen = () => {
             </View>
           </View>
         </Modal>
-        <Text style={styles.title}>Welcome {fullName}</Text>
+
+        {fullName ? (
+          <Text style={styles.title}>Welcome {fullName}</Text>
+          ) : (<Text style={styles.title}>Welcome User</Text>
+          )}
         
         <View style={styles.container}>
           <View style={styles.cardContainer}>
