@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Pressable,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, SIZES } from "../../constants/theme";
@@ -24,6 +25,7 @@ const LogViewScreen = () => {
   const { itemId } = route.params || {}; // Ensure route.params is defined
   const [activity, setActivities] = useState('');
   const auth = getAuth();
+  
 
   useEffect(() => {
     if (itemId) {
@@ -47,7 +49,7 @@ const LogViewScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <KeyboardAvoidingView style={{ alignItems: "center", flex: 1 }}>
+      <ScrollView style={{ alignItems: "center", flex: 1 }}>
         <Text style={styles.title}>Result</Text>
         <View style={styles.cardContainer}>
           <View style={styles.cardContent}>
@@ -108,7 +110,7 @@ const LogViewScreen = () => {
             <Text style={styles.BtnText}>Back</Text>
           </Pressable>
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
