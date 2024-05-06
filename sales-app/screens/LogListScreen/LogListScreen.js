@@ -13,8 +13,9 @@ import {
   import { useNavigation, useRoute } from "@react-navigation/native";
   import { COLORS, FONT, SIZES } from '../../constants/theme';
   import React, { useState, useEffect } from 'react';
-  import { doc, onSnapshot, query, } from "firebase/firestore";
+  import { doc, onSnapshot, query, where, } from "firebase/firestore";
   import { collectionRef } from "../../firebase";
+import { getAuth } from "firebase/auth";
   
   
   const LogListScreen = ({ }) => {
@@ -23,9 +24,10 @@ import {
     const [stockData, setStockData] = useState(null);
     const [search, setSearch] = useState(null);
     const [activities, setActivities] = useState('');
+    const auth = getAuth();
 
     useEffect(() => {
-      const q = query(collectionRef);
+      const q = query(collectionRef, where("uid", "==", auth.currentUser.uid));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const activities = [];
         querySnapshot.forEach((doc) => {
@@ -34,7 +36,6 @@ import {
             clientname: doc.data().clientname,
             address: doc.data().address,
             detail: doc.data().detail,
-
           });
         });
         setActivities(activities);

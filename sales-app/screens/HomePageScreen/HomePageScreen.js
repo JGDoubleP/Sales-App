@@ -19,7 +19,7 @@ import {
 } from "@react-navigation/native";
 import styles from "./HomePageScreen.style";
 import { AntDesign } from "@expo/vector-icons";
-import { doc, onSnapshot, query, } from "firebase/firestore";
+import { doc, onSnapshot, query, where, } from "firebase/firestore";
 import { collectionRef } from "../../firebase";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -38,13 +38,17 @@ const HomePageScreen = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setFullName(user.displayName);
+      if (user) {
+        setFullName(user.displayName);
+      } else {
+        setFullName(""); // If user is null, set fullName to empty string
+      }
     });
   }, [])
 
 
   useEffect(() => {
-    const q = query(collectionRef);
+    const q = query(collectionRef, where("uid", "==", auth.currentUser.uid));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const activities = [];
       querySnapshot.forEach((doc) => {
@@ -93,6 +97,11 @@ const HomePageScreen = () => {
               <TouchableOpacity onPress={() => {
                 signOut(auth).then(() => {
                   // Sign-out successful.
+                  //reload app
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'SignUpScreen' }], // Navigate to your login screen
+                  });
                 }).catch((error) => {
                   console.log(error)
                 });
