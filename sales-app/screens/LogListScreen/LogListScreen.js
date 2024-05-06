@@ -15,7 +15,7 @@ import {
   import React, { useState, useEffect } from 'react';
   import { doc, onSnapshot, query, where, } from "firebase/firestore";
   import { collectionRef } from "../../firebase";
-import { getAuth } from "firebase/auth";
+  import { getAuth } from "firebase/auth";
   
   
   const LogListScreen = ({ }) => {
@@ -42,6 +42,11 @@ import { getAuth } from "firebase/auth";
       });
       return () => unsubscribe();
     }, []);
+
+    const navigateToDocument = (itemId) => {
+      // Navigate to the document with the id passed
+      navigation.navigate("LogViewScreen", { itemId });
+    };
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -88,16 +93,19 @@ import { getAuth } from "firebase/auth";
           data={activities}
           keyExtractor={(item) => item.id}
           renderItem={({item}) => (
-            <View style={styles.historyItem}>
-              <Text style={styles.historyMoney}>{item.clientname}</Text>
-              <View style={{
-                  justifyContent: 'space-between',
-                  flexDirection: 'row'
-              }}>
-              <Text numberOfLines ={1}  style={styles.historyInfo}>{item.detail.substring(0, 15)}...</Text> 
-              <Text numberOfLines ={1}  style={styles.historyDate}>{item.address.substring(0, 15)}...</Text>
+            <Pressable onPress={() => navigateToDocument(item.id)}>
+              <View style={styles.historyItem}>
+                <Text style={styles.historyMoney}>{item.clientname}</Text>
+                <View style={{
+                    justifyContent: 'space-between',
+                    flexDirection: 'row'
+                }}>
+                <Text numberOfLines ={1}  style={styles.historyInfo}>{item.detail.substring(0, 15)}...</Text> 
+                <Text numberOfLines ={1}  style={styles.historyDate}>{item.address.substring(0, 15)}...</Text>
+                </View>
               </View>
-            </View>)}/>
+            </Pressable>
+          )}/>
 
 
         </KeyboardAvoidingView>

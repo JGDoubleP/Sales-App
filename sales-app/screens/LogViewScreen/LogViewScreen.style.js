@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 80,
         width: 350,
-        height: 400,
+        flex:1,
         borderRadius: 15,
         borderColor: '#ddd',
         margin: 10,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: 100,
         marginLeft: 80,
         textAlign: "left",
-        fontSize: SIZES.small,
+        fontSize: SIZES.medium,
         color: "black"
       },
 });
