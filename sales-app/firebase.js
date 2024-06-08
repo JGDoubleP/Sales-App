@@ -10,13 +10,13 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAJua3jxNvkfx6yJrXs-k0Qmpfw0FRWaPQ",
-  authDomain: "sales-app-1196e.firebaseapp.com",
-  projectId: "sales-app-1196e",
-  storageBucket: "sales-app-1196e.appspot.com",
-  messagingSenderId: "642625465948",
-  appId: "1:642625465948:web:6695b3c81ae09de12f0099",
-  measurementId: "G-0H3PV2M9FQ"
+  apiKey: "INSERT YOUR FIREBASE CONFIG HERE",
+  authDomain: "INSERT YOUR FIREBASE CONFIG HERE",
+  projectId: "INSERT YOUR FIREBASE CONFIG HERE",
+  storageBucket: "INSERT YOUR FIREBASE CONFIG HERE",
+  messagingSenderId: "INSERT YOUR FIREBASE CONFIG HERE",
+  appId: "INSERT YOUR FIREBASE CONFIG HERE",
+  measurementId: "INSERT YOUR FIREBASE CONFIG HERE"
 };
 
 // Initialize Firebase
