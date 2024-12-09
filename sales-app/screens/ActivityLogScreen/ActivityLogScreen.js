@@ -131,10 +131,10 @@ const ActivityLogScreen = () => {
         <Text style={styles.title}>Log your activity</Text>
         <View style={styles.cardContainer}>
           <View style={styles.cardContent}>
-            <Text style={styles.ask}>Client Name</Text>
+            <Text style={styles.ask}>Activity Name</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter Client Name"
+              placeholder="Enter Activity Name"
               value={clientName}
               onChangeText={(text) => setClientName(text)}
             />

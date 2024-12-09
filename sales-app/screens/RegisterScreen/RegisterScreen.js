@@ -79,7 +79,7 @@ const RegisterScreen = () => {
 
         <KeyboardAvoidingView style={{ alignItems: "center" }}>
           <Text style={styles.title}>Create an account</Text>
-          <Text style={{ opacity: 0.5 }}>Manage your finance now</Text>
+          <Text style={{ opacity: 0.5 }}>Log your activity now</Text>
 
           <View style={{ marginTop: 50 }}>
             <View style={styles.ViewInput}>
